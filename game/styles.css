@@ -1,0 +1,52 @@
+/* Bistrô das 3:33 (~/workspace/make-fun/best-cooking-game-20261125-0137/repo/).
+   8-bit diner look: warm cream by day, purple and toxic green after 3:33.
+   The order board, timer and score are DOM so they stay crisp when the
+   judge's contact sheet shrinks the screenshot. No web fonts, no network.
+   Layout budget for a 1280x720 capture: topbar ~118 + canvas 480 +
+   bottombar ~96 = ~694, inside #wrap's fixed 720 px with no scroll. */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #17101f; }
+body { font-family: monospace, "Courier New", monospace; color: #f5efdd; }
+#wrap { width: 1280px; height: 720px; overflow: hidden; margin: 0 auto; background: #241533; }
+#topbar { display: flex; gap: 12px; align-items: stretch; padding: 6px 12px; background: #1d1420; border-bottom: 4px solid #7bd747; }
+#brand h1 { margin: 0; font-size: 22px; color: #f2c94c; letter-spacing: 1px; white-space: nowrap; }
+#brand p { margin: 2px 0 0; font-size: 14px; color: #d8cbb0; }
+#brand p.night { color: #7bd747; font-weight: bold; }
+#orders { flex: 1; display: flex; gap: 8px; min-height: 96px; }
+.ticket { flex: 1; display: flex; flex-direction: column; gap: 2px; text-align: left; padding: 4px 8px; background: #f5efdd; color: #1d1420; border: 3px solid #8a5a33; border-radius: 4px; font-family: inherit; cursor: pointer; }
+.ticket.empty { background: #3d2b52; border-color: #5a4a6b; color: #9a8f7a; align-items: center; justify-content: center; }
+.ticket.selected { border-color: #f2c94c; box-shadow: 0 0 0 3px #f2c94c; }
+.ticket:focus-visible, .plate-chip:focus-visible, #cursed-btn:focus-visible, #start-btn:focus-visible { outline: 3px solid #f2c94c; outline-offset: 2px; }
+.ticket.urgent { border-color: #c1121f; animation: pulse 0.7s infinite alternate; }
+@keyframes pulse { from { box-shadow: 0 0 0 0 #c1121f; } to { box-shadow: 0 0 0 4px #c1121f; } }
+.ticket-head { font-size: 14px; }
+.ticket-head i { font-style: normal; color: #6b5a7a; }
+.ticket-head .vip { font-style: normal; color: #c1121f; font-weight: bold; }
+.ticket-dish { font-size: 15px; font-weight: bold; }
+.ticket-items { display: flex; flex-wrap: wrap; gap: 3px; }
+.chip { background: var(--chip, #999); color: #1d1420; border: 2px solid #1d1420; border-radius: 3px; padding: 1px 4px; font-size: 12px; font-weight: bold; }
+.ticket-taunt { font-size: 12px; font-weight: bold; color: #c1121f; }
+.patience { display: block; height: 8px; background: #3d2b52; border: 2px solid #1d1420; }
+.patience span { display: block; height: 100%; background: #7bd747; }
+.ticket.urgent .patience span { background: #c1121f; }
+.ticket-time { font-size: 12px; font-weight: bold; }
+#timers { display: flex; flex-direction: column; gap: 2px; min-width: 180px; font-size: 15px; font-weight: bold; }
+#timer { font-size: 24px; color: #f2c94c; }
+#clock { color: #7bd747; }
+#combo.hot { color: #ff5400; }
+#game { display: block; width: 1280px; height: 480px; image-rendering: pixelated; cursor: crosshair; }
+#bottombar { padding: 6px 12px 8px; background: #1d1420; border-top: 4px solid #7bd747; }
+#plate-strip { display: flex; gap: 6px; align-items: center; min-height: 28px; font-size: 14px; }
+.plate-label { font-weight: bold; color: #f2c94c; }
+.plate-chip { font-family: inherit; font-size: 14px; font-weight: bold; background: #f5efdd; color: #1d1420; border: 2px solid #1d1420; border-radius: 3px; padding: 3px 7px; cursor: pointer; }
+.plate-chip.cursed { background: #ff5400; color: #fff; }
+.plate-slot { color: #9a8f7a; border: 2px dashed #5a4a6b; padding: 3px 7px; border-radius: 3px; }
+.ready-badge { margin-left: auto; font-weight: bold; color: #7bd747; }
+.ready-badge.off { color: #9a8f7a; font-weight: normal; }
+#controls { display: flex; gap: 10px; align-items: center; margin-top: 6px; }
+#hands { font-size: 14px; color: #d8cbb0; }
+#cursed-btn { font-family: inherit; font-size: 14px; font-weight: bold; background: #ff5400; color: #fff; border: 3px solid #1d1420; border-radius: 4px; padding: 5px 12px; cursor: pointer; }
+#start-btn { font-family: inherit; font-size: 14px; font-weight: bold; background: #f2c94c; color: #1d1420; border: 3px solid #1d1420; border-radius: 4px; padding: 5px 12px; cursor: pointer; }
+#message { font-size: 14px; color: #f2c94c; }
+#help { margin: 4px 0 0; font-size: 12px; color: #9a8f7a; }
+#status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
